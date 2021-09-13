@@ -43,5 +43,8 @@ Paste into the jenkins home:
 Verify the configuration: 
 -bash-4.2$ ls -l .kube/config
 -bash-4.2$ helm list  --->  NAME   NAMESPACE     REVISION     UPDATED     STATUS     CHART    APP VERSION (Blank because no app deployed)
-It will change once we deploy an app  
-
+The status will display the deployment once we run the CD Job in the jenkins:
+e.g. 
+-bash-4.2$ helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+petclinic-app   default         3               2021-09-13 08:20:51.499549613 +0000 UTC deployed        petclinic-0.1.0 1.0
