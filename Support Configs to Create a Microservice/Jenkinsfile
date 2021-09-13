@@ -1,2 +1,14 @@
 Create a Pipelline job
 e.g.
+  steps {           
+                        sh 'pwd'
+                        sh 'cp -R helm/* .'
+		        sh 'ls -ltr'
+                        sh 'pwd'
+                        sh '/usr/local/bin/helm upgrade --install petclinic-app petclinic  --set image.repository=registry.hub.docker.com/omeshwar/petclinic --set image.tag=13'
+              			
+            }          
+
+"pwd": /var/lib/jenkins/workspace/<CD Job Name> e.g. DeployImage
+"cp -R helm/* .": Copy the helm chart insdide the dir helm to the pwd 
+e.g. we have helm chart "petclicin" in this example so the command is executing as "cp -R helm/petclinic /var/lib/jenkins/workspace/DeployImage"
