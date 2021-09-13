@@ -8,6 +8,11 @@ Get a latesr version:
 $ ./get_helm.sh
 Get a desired version: e.g. v3.6.3 or v3.0.0
 ./get_helm.sh -v v3.6.3
+or
+$ wget https://get.helm.sh/helm-v3.0.0-rc.2-linux-amd64.tar.gz
+$ tar xzf helm-v3.0.0-rc.2-linux-amd64.tar.gz
+$ mv linux-amd64/helm ~/.bin/
+
 Add a stable version:
 helm repo add stable https://charts.helm.sh/stabl
 or
@@ -48,3 +53,7 @@ e.g.
 -bash-4.2$ helm list
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
 petclinic-app   default         3               2021-09-13 08:20:51.499549613 +0000 UTC deployed        petclinic-0.1.0 1.0
+
+Delete the deployment with history:
+-bash-4.2$ helm uninstall <deployment-name>  (helm3)
+$ helm delete --purge <deployment-name>  (helm2)
