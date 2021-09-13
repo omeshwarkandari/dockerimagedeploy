@@ -1,0 +1,47 @@
+Install & confidure Helm on the system from where we will manage the Kubernetes cluster.
+e.g. Jenkins server because we are using Jenkins for CD of the docker images into the cluster.
+
+1. Install Stable Helm Repo: Helm Version 3 does not need tiller to manage the cluster while Helm2 needs a client side component Tiller to be installed in the Cluster Masetr Node.
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+Get a latesr version:
+$ ./get_helm.sh
+Get a desired version: e.g. v3.6.3 or v3.0.0
+./get_helm.sh -v v3.6.3
+Add a stable version:
+helm repo add stable https://charts.helm.sh/stabl
+or
+helm repo add stable https://charts.helm.sh/stable --force-update
+
+Check the Helm version: Login with root.
+# helm version   ---> version.BuildInfo{Version:"v3.6.3", GitCommit:"d506314abfb5d21419df8c7e7e68012379db2354", GitTreeState:"clean", GoVersion:"go1.16.5"}
+# helm   ---> This will display helm command and help.
+[root@jenkins ~]# helm list  (The error means there is no connection with the Kubernets Cluster)
+Error: Kubernetes cluster unreachable: <html><head><meta http-equiv='refresh' content='1;url=/login?from=%2Fversion%3Ftimeout%3D32s'/><script>window.location.replace('/login?from=%2Fversion%3Ftimeout%3D32s');</script></head><body style='background-color:white; color:white;'>
+Authentication required
+<!--
+-->
+</body></html>
+
+Autheticate user "jenkins" with Kuberbetes Cluster:
+Add jenkins as sudoers list and bash shell.
+[root@jenkins ~]# su - jenkins
+-bash-4.2$ helm list   ---> It will display the error because we have not autheticated jenkins with cluster.
+
+Provide Cluster access to jenkins by copiing admin.config from cluster to the .kube directory in the jenkins $HOME i.e. /var/lib/jenkins
+-bash-4.2$ pwd   ---> /var/lib/jenkins
+-bash-4.2$ mkdir .kube
+Change the ownership to jenkins:
+-bash-4.2$ chown -R jenkins:jenkins .kube/
+-bash-4.2$ ls -l .kube/
+-rw--w---- 1 jenkins jenkins 5642 Sep 12 10:30 config
+
+Copy the configurations from Master:
+root@Master-Node:~# cat /etc/kubernetes/admin.conf
+Paste into the jenkins home:
+-bash-4.2$ nano .kube/config 
+Verify the configuration: 
+-bash-4.2$ ls -l .kube/config
+-bash-4.2$ helm list  --->  NAME   NAMESPACE     REVISION     UPDATED     STATUS     CHART    APP VERSION (Blank because no app deployed)
+It will change once we deploy an app  
+
