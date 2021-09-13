@@ -25,7 +25,14 @@ template:
 petclinic: Name of the repository in the git-hub (SCM) 
 --set image.repository=registry.hub.docker.com/omeshwar/petclinic --set image.tag=13: This is run time command that helps in over wrting the image name provided in the 
 valkue.yml file.
-e.g. 	
+image:
+  repository: omeshwar/petclinicimage  (<Repository-name:Image-name>)
+  tag: latest
+  pullPolicy: IfNotPresent
+e.g. our values.yaml image name and tag matches with the image name in the docker-hub repo then the command "/usr/local/bin/helm upgrade --install petclinic-app petclinic"
+is good to deploy the imgae to the cluster, however, since actualimage name "petclinic, tag:13" are different so we are we are passing the additonal run command.
+Tried with "--set image.repository=registry.hub.docker.com/omeshwar/petclinic --set image.tag=1" and image get created but POD crahsdroff with error could not pull the image 
+from the docker-hub registry.
 	
 
 	
