@@ -12,3 +12,4 @@ e.g.
 "pwd": /var/lib/jenkins/workspace/<CD Job Name> e.g. DeployImage
 "cp -R helm/* .": Copy the helm chart insdide the dir helm to the pwd 
 e.g. we have helm chart "petclicin" in this example so the command is executing as "cp -R helm/petclinic /var/lib/jenkins/workspace/DeployImage"
+This will help in executing in the various yaml files like deployment, service, vars etc. inside the helm chart.
