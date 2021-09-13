@@ -1,1 +1,2 @@
 Refer to omjyo/KS8/Kubeadm/Installation on Ubuntu OS
+Use t3.medium for Master and Nodes to help create application pods successfully.
