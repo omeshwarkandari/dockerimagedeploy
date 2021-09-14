@@ -1,1 +1,4 @@
-Refer to /templates/hpa.yaml
+HPA 
+HPA is needed to improve the availability in the time of stress.
+The pre-requisite of HPA is Metric-server.
+Reter to 
