@@ -18,10 +18,9 @@ Reter to README.MD of https://github.com/omeshwarkandari/metric-server.git
 
 
 
-# Configure Horizontal Pod Autoscaler
+# Configure Horizontal Pod Autoscaler for CPU and Memory
 
-## Modify deployment.yaml with Resource limits
-```sh
+1. Modify "deployment.yaml" with Resource limits
   
           resources:
           limits:
@@ -30,35 +29,57 @@ Reter to README.MD of https://github.com/omeshwarkandari/metric-server.git
           requests:
             cpu: '1'
             memory: "500Mi"
-  ```
-## hpa.yaml file in helm chart
- ```sh
-  apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: petclicnic-hpa
-spec:
-  maxReplicas: 5
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    name: petclinic-deployment
-  targetCPUUtilizationPercentage: 50
-  ```
+
+2. Add yaml file "petclinic-hpa.yaml" in the helm chart to create pods when the CPU utilization reaches the target utilization.
+
+          apiVersion: autoscaling/v1
+          kind: HorizontalPodAutoscaler
+          metadata:
+            name: petclicnic-hpa
+          spec:
+            maxReplicas: 5
+            minReplicas: 1
+            scaleTargetRef:
+              apiVersion: extensions/v1beta1
+              kind: Deployment
+              name: petclinic-deployment
+            targetCPUUtilizationPercentage: 50
+
+3. Add yaml file "petclinic-mem.yaml" in the helm chart to create pods when the Memory utilization reaches the target utilization.
+
+          apiVersion: autoscaling/v2beta1
+          kind: HorizontalPodAutoscaler
+          metadata:
+            name: petclinic-mem-hpa
+          spec:
+            maxReplicas: 5
+            minReplicas: 1
+            scaleTargetRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: petclinic-deployment
+            metrics:
+            - type: Resource
+              resource:
+                name: memory
+                targetAverageUtilization: 50
+                
+We should get the pods created:
+$ kubectl get hpa
+NAME                REFERENCE                         TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+petclicnic-hpa      Deployment/petclinic-deployment   <unknown>/50%   1         5         1          92m
+petclinic-mem-hpa   Deployment/petclinic-deployment   <unknown>/50%   1         5         1          92m
+
+4. Run the seige stress test from the Master.
 ## Install siege package on K8 Master
+          yum -y install epel-release
+          yum -y install siege
 
 ### Siege is a stress tester for HTTP/HTTPS
+          siege -q -c 2 -t 2m http://ip:port
+          q = quiet mode
+          c = concurrent
+          2m = time period
 
-```sh
-yum -y install epel-release
-yum -y install siege
-```
-```sh
-siege -q -c 2 -t 2m http://ip:port
-q = quiet mode
-c = concurrent
-2m = time period
-``
 Note: replace http://ip:port with <Node Public IP where app pod craeted>:<forwarded port number> e.g. http://54.91.252.237:32750/
 We can replace this with any website that is hosted inside the cluster.
