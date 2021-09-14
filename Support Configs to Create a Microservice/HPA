@@ -1,4 +1,4 @@
 HPA (Horzontal Pod Scaler)
-HPA helps in horizontal auto-scaling of the pods whenever the reource utilization recahed the threshhold limit as defined in the 
+HPA helps in horizontal auto-scaling of the pods whenever the reource utilization recahed the threshhold limit as defined.
 The pre-requisite of HPA is Metric-server.
 Reter to README.MD of https://github.com/omeshwarkandari/metric-server.git
