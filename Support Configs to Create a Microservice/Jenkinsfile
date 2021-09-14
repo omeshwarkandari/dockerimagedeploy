@@ -17,6 +17,13 @@ This will help in executing in the various yaml files like deployment, service, 
 "/usr/local/bin/helm upgrade --install petclinic-app petclinic  --set image.repository=registry.hub.docker.com/omeshwar/petclinic --set image.tag=13"
 /usr/local/bin/helm: This is the location of executable file "helm" in the jenkins server
 upgrade --install: The command --install helps in the first time installation of the app e.g. petclinic-app ,however, re-run of the app will need upgrade as install will error.
+e.g. After deploying the application petclinic-app and testing it if we want to redeplo after uninstalling the deployment using helm then below error observed
+( $ helm uninstall petclinic-app  ---> release "petclinic-app" uninstalled
+  $ helm list   --->     NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+  Run the deploy job from jenkins and deployment fails with the error "Error: serviceaccounts "petclinic-app" already exists", perhaps because of the old installation and we
+ need to change the pipeline syntax by replacing "upgrade --install" to just "upgrae"
+ i.e. "/usr/local/bin/helm upgrade petclinic-app petclinic  --set image.repository=registry.hub.docker.com/omeshwar/petclinic --set image.tag=13"
+ 
 petclinic-app: The app name is what we have provided in the deployment.yaml
 template:
     metadata:
