@@ -1,6 +1,8 @@
 HPA (Horzontal Pod Scaler)
 HPA helps in horizontal auto-scaling of the pods whenever the reource utilization recahed the threshhold limit as defined in the deployment file for the application
-e.g. petclinic/templates/deployment.yaml
+e.g. petclinic/templates/deployment.yaml, we have set that a container can utilize max 1 CPU and 500MB of memory and when the target utilization defined in the 
+petclinic/templates/petclinic-hpa.yaml e.g. 50% then a new pod shoud be created automatically to keep the application runing to avoid the outage.
+petclinic/templates/deployment.yaml:-
 resources:
           limits:
             cpu: '1'
@@ -8,5 +10,8 @@ resources:
           requests:
             cpu: '1'
             memory: '500Mi'
+petclinic/templates/petclinic-hpa.yaml          
+targetCPUUtilizationPercentage: 50
+
 The pre-requisite of HPA is Metric-server.
 Reter to README.MD of https://github.com/omeshwarkandari/metric-server.git
