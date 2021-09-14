@@ -33,6 +33,11 @@ Add jenkins as sudoers list and bash shell.
 [root@jenkins ~]# su - jenkins
 -bash-4.2$ helm list   ---> It will display the error because we have not autheticated jenkins with cluster.
 
+Check the hel repo:
+-bash-4.2$ helm repo list   
+NAME    URL
+stable  https://charts.helm.sh/stable
+
 Provide Cluster access to jenkins by copiing admin.config from cluster to the .kube directory in the jenkins $HOME i.e. /var/lib/jenkins
 -bash-4.2$ pwd   ---> /var/lib/jenkins
 -bash-4.2$ mkdir .kube
