@@ -1,4 +1,4 @@
 HPA 
 HPA is needed to improve the availability in the time of stress.
 The pre-requisite of HPA is Metric-server.
-Reter to 
+Reter to README.MD of https://github.com/omeshwarkandari/metric-server.git
