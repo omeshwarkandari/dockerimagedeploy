@@ -59,4 +59,6 @@ siege -q -c 2 -t 2m http://ip:port
 q = quiet mode
 c = concurrent
 2m = time period
-```
+``
+Note: replace http://ip:port with <Node Public IP where app pod craeted>:<forwarded port number> e.g. http://54.91.252.237:32750/
+We can replace this with any website that is hosted inside the cluster.
