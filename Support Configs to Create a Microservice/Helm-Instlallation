@@ -6,12 +6,12 @@ $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/s
 $ chmod 700 get_helm.sh
 Get a latesr version:
 $ ./get_helm.sh
-Get a desired version: e.g. v3.6.3 or v3.0.0
-./get_helm.sh -v v3.6.3
+Get a desired version: Login as root and run the command $./get_helm.sh -v <version name> 
+e.g.
+[root@jenkins ~]#./get_helm.sh -v v3.6.3
 or
-$ wget https://get.helm.sh/helm-v3.0.0-rc.2-linux-amd64.tar.gz
-$ tar xzf helm-v3.0.0-rc.2-linux-amd64.tar.gz
-$ mv linux-amd64/helm ~/.bin/
+[root@jenkins ~]#./get_helm.sh -v v3.2.1
+Check the helm version: $ helm version using both root as well as local user e.g. jenkins in our example.
 
 Add a stable version:
 helm repo add stable https://charts.helm.sh/stabl
